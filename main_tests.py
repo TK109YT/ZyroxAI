@@ -12,7 +12,7 @@ import pyttsx3
 import colorama
 import pyautogui
 import wikipedia
-import pywhatkit
+# import pywhatkit
 import subprocess
 import webbrowser
 import speech_recognition as sr
@@ -76,73 +76,70 @@ transcript = lambda text: print(prompt + text)
 
 
 try:
-    print(f"{green}{blod}[{lgreen}{blod}+{green}{blod}] {white}{blod}Aplicación iniciada y en escucha...{reset}")
-    tts.say("Aplicación iniciada y en escucha...")
+    print(f"{green}{blod}[{lgreen}{blod}+{green}{blod}] {white}{blod}Aplication started and listening...{reset}")
+    tts.say("Aplication started an listening")
     tts.runAndWait()
 
     while True:
         with sr.Microphone() as micro:
             listener.adjust_for_ambient_noise(micro, duration=1)    # Eliminación del ruido de fondo
             voice = listener.listen(micro)
-            rec = listener.recognize_google(voice, language='es-ES', show_all=True)
+            rec = listener.recognize_google(voice, language='en-EN', show_all=True)
             rec = str(rec)
             
             # Saludos
             try:
-                if rec == "Zyrox" or "cirox" or "cyrox" or "ciros":
+                if rec == "Zyrox" or "ZyroxAI":
                     print(transcript(rec))
-                    answer("Aquí estoy.")
+                    answer("Here I am")
 
-                elif "Zyrox, estás " or "cirox, estás " or "cyrox, estás " or "ciros, estás " in rec:
-                    answer("¡Claro!, ¿que quieres?")
+                if "Zyrox, are you there" or "ZyroxAI, are you there" in rec:
+                    answer("Sure! What do you want?")
 
 
             except sr.UnknownValueError:
-                print(f"{red}{blod}[{lred}{blod}x{red}{blod}] {white}{blod}No se pudo reconocer el audio")
-                answer("No te he entendido")
+                print(f"{red}{blod}[{lred}{blod}x{red}{blod}] {white}{blod}Audio not reconized")
+                answer("I don't undestand you, repeat please")
 
 
             # Cosos de GitHub
             try:
-                if rec == "Abre" or "Abreme" + "GitHub" or "gitjub":
+                if rec == "Open" + "GitHub":
                     webbrowser.open('https://github.com/')
 
-                if "Abre" or "Abreme" + "el repositorio" or "el repo" + "de":
-                    repo = rec.replace('el repo' or "el repositorio", '')
-                    user = rec.replace('de', '')
-                    answer("Abriendo " + repo + user)
+                if "Open" + "the repository":
+                    repo = rec.replace('the repository', '')
+                    user = rec.replace('Open', '')
+                    answer("Opening " + repo + user)
                     webbrowser.open('https://github.com')
 
             except sr.UnknownValueError:
-                print(f"{red}{blod}[{lred}{blod}x{red}{blod}] {white}{blod}No te entendí.")
-                answer("No te entendí")
+                print(f"{red}{blod}[{lred}{blod}x{red}{blod}] {white}{blod}Audio not reconized.")
+                answer("I don't undestand you, repeat please")
 
 
             # Abrir una consola
             try:
-                if rec == "Abre" or "Abreme" + "una CMD" or "una cmd":
-                    answer("Abriendo CMD en directorio home")
+                if rec == "open" + "a CMD":
+                    answer("Opening a CMD in home directory")
                     os.system('start cmd')
 
-                if rec == "Abre" or "Abreme" + "una POWERSHELL" or "una powershell" or "una POUERSEL" or "una pouersel":
-                    answer("Abriendo POWERSHELL en directorio home")
+                if rec == "open" + "a POWERSHELL":
+                    answer("Opening a POWERSHELL at home directory")
                     os.system('start powershell')
 
             except sr.UnknownValueError:
-                print(f"{red}{blod}[{lred}{blod}x{red}{blod}] {white}{blod}No te entendí.")
-                answer("No te entendí")
+                print(f"{red}{blod}[{lred}{blod}x{red}{blod}] {white}{blod}Audio not reconized")
+                answer("I couldn't undestood you, please repeat once more.")
 
 
 
 except KeyboardInterrupt:
-    print(f"{yellow}[{lyellow}!{yellow}] {white}Saliendo...")
+    print(f"{yellow}[{lyellow}!{yellow}] {white}Quitting...")
+    answer("Quitting, good bye!")
     exit()
 
 except sr.RequestError as e:
     print(e)
-
-""" except sr.UnknownValueError:
-    print(f"{red}{blod}[{lred}{blod}x{red}{blod}] {white}{blod}No se pudo reconocer el audio")
-    exit() """
 
 
